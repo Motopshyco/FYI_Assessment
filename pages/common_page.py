@@ -1,6 +1,6 @@
 from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
-
+from selenium.common import TimeoutException
 
 class CommonPage(BasePage):
     #side menu locators
@@ -21,6 +21,14 @@ class CommonPage(BasePage):
         """
         self.click_element(self._hamburger_menu_button)
 
+    def get_hamburger_option(self, menu_option):
+        """
+        This method gets the desired element for the hamburger menu
+        :param menu_option: string, desired option in the hamburger menu
+        :return: web element, desired web element in the hamburger menu
+        """
+        return self.wait_element(self._hamburger_menu_option(menu_option))
+
     def click_hamburger_option(self, menu_option):
         """
         This method clicks the desired option in the menu displayed by the hamburger button
@@ -30,7 +38,24 @@ class CommonPage(BasePage):
 
     def get_copyright_text(self):
         """
-        this method get the copyright text at the footer of the page
+        This method get the copyright text at the footer of the page
         :return: string, copyright text
         """
         return self.wait_element_to_visible(self._copyright_text_).text
+
+    def check_hamburger_menu_options(self, options_list):
+        """
+        This method check if the menu displayed by the hamburger has all the desired options for the user
+        :param options_list: list, options desired in the menu
+        :return: list, errors if any option is not on the menu
+        """
+        errors = []
+        self.display_hamburger_menu()
+        for option in options_list:
+            try:
+                self.get_hamburger_option(option)
+                print(f'✅ the element {option} is on the menu')
+            except TimeoutException:
+                error = f'❌ Test Failed: the element {option} is not on the menu'
+                errors.append(error)
+        return errors
