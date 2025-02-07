@@ -44,3 +44,12 @@ class BasePage:
         element = self.wait_element_to_visible(locator, timeout)
         element.clear()
         element.send_keys(text)
+
+    def get_text_from_element(self, locator, timeout = 10):
+        """
+        This method gets the text from a specified locator
+        :param locator: tuple, locator to get the needed text
+        :param timeout: number, maximum time in seconds to wait the element appears
+        :return: string, text of the desired element
+        """
+        return self.wait_element(locator, timeout).text

@@ -41,7 +41,7 @@ class CommonPage(BasePage):
         This method get the copyright text at the footer of the page
         :return: string, copyright text
         """
-        return self.wait_element_to_visible(self._copyright_text_).text
+        return self.get_text_from_element(self._copyright_text_)
 
     def check_hamburger_menu_options(self, options_list):
         """

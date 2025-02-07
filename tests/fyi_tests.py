@@ -1,18 +1,22 @@
 import unittest
 from selenium import webdriver
 
-
 from pages.common_page import CommonPage
+from pages.help_page import HelpPage
+from pages.submit_a_request_page import SubmitARequestPage
+
 
 class FyiTests(unittest.TestCase):
 
     def setUp(self):
         """
-        This method open and maximize the browser before each scenario
+        This method open and maximize the browser before each scenario and creates the instance for each page
         """
         self.driver = webdriver.Chrome()
         self.driver.maximize_window()
         self.common_page = CommonPage(self.driver)
+        self.help_page = HelpPage(self.driver)
+        self.submit_a_request_page = SubmitARequestPage(self.driver)
 
     def test_terms_of_service_copyright(self):
         """
@@ -33,6 +37,23 @@ class FyiTests(unittest.TestCase):
 
         if errors:
             raise AssertionError('The tests failed with this errors: \n' + '\n'.join(errors))
+
+    def test_contact_support_button(self):
+        """
+        This test verifies if the contact support button redirects to the "submit request" page
+        """
+        self.common_page.display_hamburger_menu()
+        self.common_page.click_hamburger_option('Help')
+
+        handles = self.driver.window_handles
+        self.driver.switch_to.window(handles[0])
+        self.driver.close()
+        self.driver.switch_to.window(handles[1])
+
+        self.help_page.click_contact_support_button()
+        page_title = self.submit_a_request_page.get_page_title()
+
+        self.assertEqual(page_title, 'Submit a request', 'the button does not redirect to the correct page')
 
     def tearDown(self):
         """
