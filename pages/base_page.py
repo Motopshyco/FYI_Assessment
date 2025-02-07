@@ -45,6 +45,16 @@ class BasePage:
         element.clear()
         element.send_keys(text)
 
+    def send_key_to_element(self, locator, key, timeout=10):
+        """
+        This method writes a specific text in the desired place at the app
+        :param locator: tuple, locator to find the element to use an action
+        :param key: string, key to send to the web element
+        :param timeout: number, maximum time in seconds to wait the element appears
+        """
+        element = self.wait_element_to_visible(locator, timeout)
+        element.send_keys(key)
+
     def get_text_from_element(self, locator, timeout = 10):
         """
         This method gets the text from a specified locator

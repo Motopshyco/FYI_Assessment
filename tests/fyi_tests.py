@@ -55,6 +55,16 @@ class FyiTests(unittest.TestCase):
 
         self.assertEqual(page_title, 'Submit a request', 'the button does not redirect to the correct page')
 
+    def test_search_input_results(self):
+        """
+        This tests verifies how many results you get after search AI
+        """
+        self.driver.get('https://help.fyi.me/hc/en-us/requests/new')
+        self.submit_a_request_page.search_text('AI')
+        quantity_of_results = self.submit_a_request_page.get_quantity_results()
+
+        self.assertIn('15', quantity_of_results, f'the search got {quantity_of_results}')
+
     def tearDown(self):
         """
         This method close the browser after each scenario
