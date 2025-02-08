@@ -14,6 +14,7 @@ class FyiTests(unittest.TestCase):
         """
         self.driver = webdriver.Chrome()
         self.driver.maximize_window()
+        self.driver.get('https://fyi.ai/')
         self.common_page = CommonPage(self.driver)
         self.help_page = HelpPage(self.driver)
         self.submit_a_request_page = SubmitARequestPage(self.driver)
@@ -33,6 +34,7 @@ class FyiTests(unittest.TestCase):
         This test validates if the hamburger menu contains the correct user selection options
         """
         options_list = ["Home", "Help", "About Us", "The Team", "Press", "Terms of Service", "Privacy Policy"]
+        self.common_page.display_hamburger_menu()
         errors = self.common_page.check_hamburger_menu_options(options_list)
 
         if errors:
@@ -44,12 +46,7 @@ class FyiTests(unittest.TestCase):
         """
         self.common_page.display_hamburger_menu()
         self.common_page.click_hamburger_option('Help')
-
-        handles = self.driver.window_handles
-        self.driver.switch_to.window(handles[0])
-        self.driver.close()
-        self.driver.switch_to.window(handles[1])
-
+        self.common_page.change_to_a_new_page()
         self.help_page.click_contact_support_button()
         page_title = self.submit_a_request_page.get_page_title()
 

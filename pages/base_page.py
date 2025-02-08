@@ -63,3 +63,12 @@ class BasePage:
         :return: string, text of the desired element
         """
         return self.wait_element(locator, timeout).text
+
+    def change_to_a_new_page(self):
+        """
+        This method change the control to the new window, and close the previous one
+        """
+        handles = self.driver.window_handles
+        self.driver.switch_to.window(handles[0])
+        self.driver.close()
+        self.driver.switch_to.window(handles[1])

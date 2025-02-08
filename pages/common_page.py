@@ -13,6 +13,11 @@ class CommonPage(BasePage):
 
     def __init__(self, driver):
         super().__init__(driver)
+
+    def open_home_page(self):
+        """
+        This method open the home page of the app
+        """
         self.driver.get('https://fyi.ai/')
 
     def display_hamburger_menu(self):
@@ -34,7 +39,10 @@ class CommonPage(BasePage):
         This method clicks the desired option in the menu displayed by the hamburger button
         :param menu_option: string, option to click in the menu
         """
-        self.click_element(self._hamburger_menu_option(menu_option))
+        try:
+            self.click_element(self._hamburger_menu_option(menu_option))
+        except TimeoutException:
+            raise Exception(f'the element {menu_option} is not on the menu')
 
     def get_copyright_text(self):
         """
@@ -50,7 +58,6 @@ class CommonPage(BasePage):
         :return: list, errors if any option is not on the menu
         """
         errors = []
-        self.display_hamburger_menu()
         for option in options_list:
             try:
                 self.get_hamburger_option(option)
