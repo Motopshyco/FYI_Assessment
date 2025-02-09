@@ -8,8 +8,10 @@ This is the QA assessment created by Mateo Florez and here you can find 4 differ
 - Verify Search Results for "AI" on the Submit a Request Page
 
 For each scenario you can find 2 different approaches one of them with BDD and the other one just a test script
+implemented in a page object model framework
 
-To execute the scenarios with test script you will need:
+You can find the test scripts in the folder "tests_scripts" and all the related methods for each page in the folder 
+"pages". To execute the scenarios with this approach you will need:
 
 - Python: install python in your pc
 - If you are in a venv use "deactivate"
@@ -20,7 +22,15 @@ To execute the scenarios with test script you will need:
 Now you can run the tests executing the command "python -m unittest tests_scripts/fyi_tests.py" in your console or using
 the run option in your IDE
 
-To execute the scenarios with BDD you will need:
+The structure of the BDD framework is as follows:
+
+- Project
+  - Features (In this folder you can find the feature files with the scenarios e.g. "fyi_common_tests.feature" and the 
+  environment.py file with the hooks that are executed before or after each scenario or step)
+    - steps (In this folder you can find the different steps for each page e.g. "common_steps.py")
+  - pages(In this folder you can find the pages with their methods to use in the steps e.g. "common_page.py")
+
+ To execute the scenarios with BDD you will need:
 
 - Python: install python in your pc
 - Selenium: run the command "pip install selenium"
